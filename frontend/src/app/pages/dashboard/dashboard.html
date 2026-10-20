@@ -14,44 +14,46 @@
 
   <section class="grade">
     @for (c of cards(); track c.sensor.id) {
-      <article class="card" [class.com-alerta]="c.totalAlertas > 0">
-        <header>
-          <h2>{{ c.sensor.nome }}</h2>
-          <span class="tipo">{{ c.sensor.tipo }}</span>
-        </header>
+      <a class="card-link" [routerLink]="['/sensor', c.sensor.id]">
+        <article class="card" [class.com-alerta]="c.totalAlertas > 0">
+          <header>
+            <h2>{{ c.sensor.nome }}</h2>
+            <span class="tipo">{{ c.sensor.tipo }}</span>
+          </header>
 
-        <p class="media">
-          {{ (c.agregado.media | number: '1.1-2') ?? '—' }}
-          <small>{{ c.sensor.unidade }}</small>
-        </p>
-        <p class="legenda">média</p>
+          <p class="media">
+            {{ (c.agregado.media | number: '1.1-2') ?? '—' }}
+            <small>{{ c.sensor.unidade }}</small>
+          </p>
+          <p class="legenda">média</p>
 
-        <dl>
-          <div>
-            <dt>Mín</dt>
-            <dd>{{ (c.agregado.minimo | number: '1.1-2') ?? '—' }}</dd>
-          </div>
-          <div>
-            <dt>Máx</dt>
-            <dd>{{ (c.agregado.maximo | number: '1.1-2') ?? '—' }}</dd>
-          </div>
-          <div>
-            <dt>Leituras</dt>
-            <dd>{{ c.agregado.total_leituras }}</dd>
-          </div>
-        </dl>
+          <dl>
+            <div>
+              <dt>Mín</dt>
+              <dd>{{ (c.agregado.minimo | number: '1.1-2') ?? '—' }}</dd>
+            </div>
+            <div>
+              <dt>Máx</dt>
+              <dd>{{ (c.agregado.maximo | number: '1.1-2') ?? '—' }}</dd>
+            </div>
+            <div>
+              <dt>Leituras</dt>
+              <dd>{{ c.agregado.total_leituras }}</dd>
+            </div>
+          </dl>
 
-        <footer>
-          <span class="faixa">
-            Esperado: {{ c.sensor.valor_min_esperado }}–{{ c.sensor.valor_max_esperado }} {{ c.sensor.unidade }}
-          </span>
-          @if (c.totalAlertas > 0) {
-            <span class="badge-alerta">{{ c.totalAlertas }} alerta(s)</span>
-          } @else {
-            <span class="badge-ok">Normal</span>
-          }
-        </footer>
-      </article>
+          <footer>
+            <span class="faixa">
+              Esperado: {{ c.sensor.valor_min_esperado }}–{{ c.sensor.valor_max_esperado }} {{ c.sensor.unidade }}
+            </span>
+            @if (c.totalAlertas > 0) {
+              <span class="badge-alerta">{{ c.totalAlertas }} alerta(s)</span>
+            } @else {
+              <span class="badge-ok">Normal</span>
+            }
+          </footer>
+        </article>
+      </a>
     }
   </section>
 </main>

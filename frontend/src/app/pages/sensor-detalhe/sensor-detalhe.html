@@ -1,0 +1,36 @@
+<main class="detalhe">
+  <a routerLink="/" class="voltar">← Voltar ao dashboard</a>
+
+  @if (sensor(); as s) {
+    <h1>{{ s.nome }}</h1>
+    <p class="subtitulo">{{ s.tipo }} · esperado {{ s.valor_min_esperado }}–{{ s.valor_max_esperado }} {{ s.unidade }}</p>
+  } @else {
+    <h1>Carregando sensor...</h1>
+  }
+
+  @if (erro()) {
+    <p class="aviso-erro">Não foi possível conectar à API. Verifique se o uvicorn está rodando.</p>
+  }
+
+  <div class="periodos">
+    @for (p of periodos; track p.minutos) {
+      <button type="button" [class.ativo]="p.minutos === minutos()" (click)="selecionarPeriodo(p.minutos)">
+        {{ p.rotulo }}
+      </button>
+    }
+  </div>
+
+  @if (agregado(); as a) {
+    <dl class="resumo">
+      <div><dt>Média</dt><dd>{{ (a.media | number: '1.1-2') ?? '—' }}</dd></div>
+      <div><dt>Mín</dt><dd>{{ (a.minimo | number: '1.1-2') ?? '—' }}</dd></div>
+      <div><dt>Máx</dt><dd>{{ (a.maximo | number: '1.1-2') ?? '—' }}</dd></div>
+      <div><dt>Leituras</dt><dd>{{ a.total_leituras }}</dd></div>
+      <div><dt>Alertas</dt><dd [class.destaque]="totalAlertas() > 0">{{ totalAlertas() }}</dd></div>
+    </dl>
+  }
+
+  <div class="grafico">
+    <canvas #grafico></canvas>
+  </div>
+</main>

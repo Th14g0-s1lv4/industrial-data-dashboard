@@ -2,7 +2,7 @@ import { DecimalPipe } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { catchError, forkJoin, map, of, switchMap, tap, timer } from 'rxjs';
-
+import { RouterLink } from '@angular/router';
 import { Agregado, Sensor } from '../../models/sensor.model';
 import { SensorService } from '../../services/sensor';
 
@@ -14,7 +14,7 @@ interface SensorCard {
 
 @Component({
   selector: 'app-dashboard',
-  imports: [DecimalPipe],
+  imports: [DecimalPipe, RouterLink],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
